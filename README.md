@@ -51,3 +51,37 @@ EnumIndexer<ElementReference> Element { get; set; } = new EnumIndexer<ElementRef
 }
 ```
 
+
+## Other
+
+```
+public class EnumIndexer<T>
+{
+    protected T[] values;
+
+    public EnumIndexer(Type enumType)
+    {
+        values = new T[Enum.GetNames(enumType).Length];
+    }
+
+    public int Length => values.Length;
+}
+
+public class Data
+{
+
+}
+
+public class Test : EnumIndexer<Data>
+{
+    public Test() : base(typeof(ETest))
+    {
+    }
+
+    public Data this[ETest index]
+    {
+        get => base.values[Convert.ToInt32(index)];
+        set => base.values[Convert.ToInt32(index)] = value;
+    }
+}
+```
